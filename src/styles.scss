@@ -9,3 +9,16 @@
 body {
   font-family: 'Roboto', sans-serif;
 }
+
+button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.container {
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

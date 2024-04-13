@@ -1,10 +1,15 @@
 <div class="container">
     <h1>Заметки</h1>
-    <div class="notes">
-        @for (note of notes$ | async; track note) {
-            <app-note [note]="note"/>
-        }
-    </div>
+    @if ((notes$ | async)!.length > 0) {
+        <div class="notes">
+            @for (note of notes$ | async; track note) {
+                <app-note [note]="note"/>
+            }
+        </div>
+    }
+    @else {
+        <p>Заметки отсутствуют</p>
+    }
     <app-button>
         Добавить заметку
     </app-button>

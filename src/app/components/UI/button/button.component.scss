@@ -1,0 +1,12 @@
+.btn {
+  background-color: transparent;
+  padding: 10px;
+  color: #1059a1;
+  cursor: pointer;
+  border: 1px solid #1059a1;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

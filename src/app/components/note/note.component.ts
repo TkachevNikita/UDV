@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input} from "@angular/core";
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from "@angular/core";
 import {NoteModel} from "../../models/note.model";
 import {InputComponent} from "../UI/input/input.component";
 
@@ -17,5 +17,10 @@ export class NoteComponent {
         required: true
     })
     public note!: NoteModel;
+    @Output()
+    public remove: EventEmitter<void> = new EventEmitter<void>();
 
+    public removeNote(): void {
+        this.remove.emit();
+    }
 }

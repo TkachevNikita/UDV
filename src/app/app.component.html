@@ -3,14 +3,17 @@
     @if ((notes$ | async)!.length > 0) {
         <div class="notes">
             @for (note of notes$ | async; track note) {
-                <app-note [note]="note"/>
+                <app-note (remove)="removeNote(note.id)" [note]="note"/>
             }
         </div>
     }
-    @else {
+    @if (isCreating) {
+        <app-create-note (close)="onCloseCreateClick()" (addNote)="createNote($event)"/>
+    }
+    @else if ((notes$ | async)!.length === 0) {
         <p>Заметки отсутствуют</p>
     }
-    <app-button>
+    <app-button [disabled]="isCreating" (click)="onCreateClick()">
         Добавить заметку
     </app-button>
 </div>

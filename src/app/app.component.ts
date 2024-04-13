@@ -1,45 +1,38 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
 import {ButtonComponent} from "./components/UI/button/button.component";
 import {InputComponent} from "./components/UI/input/input.component";
-import {FormControl, ReactiveFormsModule} from "@angular/forms";
+import {ReactiveFormsModule} from "@angular/forms";
 import {NoteModel} from "./models/note.model";
 import {NoteComponent} from "./components/note/note.component";
-
-export const Notes: NoteModel[] = [
-    new NoteModel({
-        id: crypto.randomUUID(),
-        title: 'Заметка 1'
-    }),
-    new NoteModel({
-        id: crypto.randomUUID(),
-        title: 'Заметка 2'
-    }),
-    new NoteModel({
-        id: crypto.randomUUID(),
-        title: 'Заметка 3'
-    })
-]
+import {Observable} from "rxjs";
+import {AsyncPipe} from "@angular/common";
+import {NoteService} from "./services/note.service";
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
+    selector: 'app-root',
+    standalone: true,
     imports: [
         RouterOutlet,
         ButtonComponent,
         InputComponent,
         ReactiveFormsModule,
-        NoteComponent
+        NoteComponent,
+        AsyncPipe
     ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    providers: [
+        NoteService
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
-    public text = new FormControl<string>('');
+export class AppComponent implements OnInit {
+    public notes$!: Observable<NoteModel[]>;
 
-    test(): void {
-        console.log(this.text);
+    constructor(private readonly _noteService: NoteService) { }
+
+    public ngOnInit(): void {
+        this.notes$ = this._noteService.getNotes();
     }
-
-    protected readonly Notes = Notes;
 }

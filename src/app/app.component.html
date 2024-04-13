@@ -1,11 +1,11 @@
 <div class="container">
     <h1>Заметки</h1>
     <div class="notes">
-        @for (note of Notes; track note) {
+        @for (note of notes$ | async; track note) {
             <app-note [note]="note"/>
         }
     </div>
-    <app-button (click)="test()">
+    <app-button>
         Добавить заметку
     </app-button>
 </div>
